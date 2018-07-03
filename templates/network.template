@@ -1,0 +1,31 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+auto interface0
+iface interface0 inet manual
+        bond-master bond0
+
+auto interface1
+iface interface1 inet manual
+        bond-master bond0
+
+auto bond0
+iface bond0 inet manual
+        mtu 9000
+        bond-mode 802.3ad
+        bond-xmit_hash_policy layer3+4
+        bond-miimon 100
+        bond-slaves none
+
+auto bond0.1
+iface bond0.1 inet static
+        vlan_raw_device bond0
+        address ip_here
+        netmask 255.255.255.0
+        gateway 10.1.123.2
+        dns-nameservers 10.1.123.2
+        dns-search domain_here
